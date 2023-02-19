@@ -32,7 +32,7 @@ const Members = ({token, groupId}) => {
             <h2 className='members__heading'>
             Участники
             </h2>
-            <MembersData token={token} memberId={memberId}/>
+            <MembersData groupId={groupId} token={token} memberId={memberId}/>
         </div>
     )
 };

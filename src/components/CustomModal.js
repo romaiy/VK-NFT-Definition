@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import bridge from '@vkontakte/vk-bridge';
+
 import { Button, PopoutWrapper, ModalDismissButton, useAdaptivityConditionalRender, Input, Textarea} from '@vkontakte/vkui';
 import { isArray } from '@vkontakte/vkjs';
 
 
-const CustomModal = ({ onClose, userId }) => {
+const CustomModal = ({ onClose, userId, groupId }) => {
     const { sizeX } = useAdaptivityConditionalRender();
     const [wallet, setWallet] = useState('');
     const [NftKey, setNftKey] = useState(null);
     const [NftName, setNftName] = useState();
+    
 
     useEffect(() => {
 		axios.get("http://localhost:8000/api/table")
@@ -19,27 +22,42 @@ const CustomModal = ({ onClose, userId }) => {
             console.log(err);
         });
 	}, [NftKey]);
+
+    const pushNotifications = () => {
+        bridge.send('VKWebAppCallAPIMethod', {
+            method: 'notifications.sendMessage',
+                params: {
+                user_ids: userId,
+                message: 'Вам отправили награду🎉',
+                v: '5.131',
+                access_token: '3c4ac4ae3c4ac4ae3c4ac4ae0c3f58712833c4a3c4ac4ae5fa54a2c68f8786d8482fce1'
+                }})
+                .then((data) => { 
+                if (data.response) {
+                }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+    }
     
     const sendNFT = () => {
-        if (wallet != null) {
+        if ((wallet != null) && (NftName != '')) {
             axios.post('http://localhost:8000/api/table', wallet, {
                     headers: {
                         'Content-Type': `text/html; charset=utf-8`
                     }
                 }).then((responseFromServer) => {
                     console.log(responseFromServer)
+                    pushNotifications();
                 }).catch((err) => {
                     console.log(err);
                 });
             
         }
-        if (wallet) {
+        if (wallet && NftName) {
             onClose();
         }
-    }
-
-    const chooseNft = (name) => {
-        setNftName(name);
     }
 
     return (
@@ -61,6 +79,14 @@ const CustomModal = ({ onClose, userId }) => {
                 className='event-create__input'
                 onChange={e => setWallet(e.target.value)}
                 />
+            <h2 className='event-create__heading'>Введите наименование NFT из списка</h2>
+                <Input 
+                value={NftName} 
+                required 
+                className='event-create__input'
+                onChange={e => setNftName(e.target.value)}
+                />
+
                 <Button size="l" appearance="accent" mode="secondary" style={{marginBottom: '10px'}} onClick={() => sendNFT()}>
                 Отправить
                 </Button>
@@ -68,7 +94,7 @@ const CustomModal = ({ onClose, userId }) => {
             {(isArray(NftKey)) ? 
             NftKey.map((item) => {
                 return(
-                    <div onClick={() => chooseNft(item.name)}>{item.name}</div>
+                    <div>{item.name}</div>
                 )
             }) :
             <div className='modal'>Загрузка NFT...</div>

@@ -11,6 +11,7 @@ const App = () => {
 	const [activePanel, setActivePanel] = useState('home');
 	const [fetchedUser, setUser] = useState(null);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
+	const [permission, setPermission] = useState(0);
 
 	useEffect(() => {
 		async function fetchData() {
@@ -19,7 +20,20 @@ const App = () => {
 			setPopout(null);
 		}
 		fetchData();
-
+		if(permission === 0) {
+			bridge.send('VKWebAppAllowNotifications')
+			.then((data) => { 
+			if (data.result) {
+			setPermission(1);
+			} else {
+			setPermission(1);
+			}
+		})
+		.catch((error) => {
+			setPermission(1);
+			console.log(error);
+		});
+		}
 	}, []);
 
 	const go = e => {

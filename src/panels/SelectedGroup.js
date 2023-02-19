@@ -53,7 +53,7 @@ const SelectedGroup = ({ userId, token, groupId, groupData }) => {
             <div className='selected__row'>
             {color.map((item) => {
                 return(
-                    <div style={{ width: '324px',marginRight: '16px' }} className='banner' key={item.color}>
+                    <div style={{ width: '324px',marginRight: '16px', marginBottom: '16px' }} className='banner' key={item.color}>
                     <Banner
                         mode="image"
                         size="m"
@@ -73,7 +73,7 @@ const SelectedGroup = ({ userId, token, groupId, groupData }) => {
                         }
                         asideMode="dismiss"
                         actions={
-                        <Button appearance="overlay" size="m">
+                        <Button appearance="overlay" size="m" disabled>
                             Подробнее
                         </Button>
                         }

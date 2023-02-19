@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import UserData from './UserData';
 import { Group, Search, Cell, Footer } from '@vkontakte/vkui';
 
-const MembersList = ({members}) => {
+const MembersList = ({members, groupId}) => {
     const [user, setUser] = useState([]);
     const [activeId, setActiveId] = useState([]);
     
@@ -35,7 +35,7 @@ const MembersList = ({members}) => {
                     <Group>
                         <Search value={search} onChange={onChange} after={null} />
                         {userFiltered.length > 0 &&
-                        userFiltered.map((item) => <UserData activeId={activeId} key={item.id} first_name={item.first_name} last_name={item.last_name} photo_200={item.photo_200} userId={item.id} setId={setId}/>)}
+                        userFiltered.map((item) => <UserData groupId={groupId} activeId={activeId} key={item.id} first_name={item.first_name} last_name={item.last_name} photo_200={item.photo_200} userId={item.id} setId={setId}/>)}
                         {userFiltered.length === 0 && <Footer>Ничего не найдено</Footer>}
                     </Group>
                 </React.Fragment>

@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { Avatar,  RichCell, ButtonGroup, Button, SplitLayout, View, SplitCol } from '@vkontakte/vkui';
 import CustomModal from './CustomModal';
 
-const UserData = ({ activeId, first_name, last_name, photo_200, userId, setId}) => {
+const UserData = ({ groupId, activeId, first_name, last_name, photo_200, userId, setId}) => {
     const [a, setA] = useState();
-    const onClick = () => setModal(<CustomModal userId={userId} onClose={() => setModal(null)} />);
+    const onClick = () => setModal(<CustomModal groupId={groupId} userId={userId} onClose={() => setModal(null)} />);
     const [modal, setModal] = useState(null);
     
     useEffect(() => {

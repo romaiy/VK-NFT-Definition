@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import bridge from '@vkontakte/vk-bridge';
 
 import { Panel, Div, Tabs, HorizontalScroll, TabsItem, View } from '@vkontakte/vkui';
 import Groups from './Groups';
 import Market from './Market';
 import AddNFT from './AddNFT';
 import SelectedGroup from './SelectedGroup';
+import Profile from './Profile';
 
 const Home = ({ id, fetchedUser }) => {
 	const [selected, setSelected] = React.useState('groups');
@@ -38,14 +40,13 @@ const Home = ({ id, fetchedUser }) => {
 			'disabled': true
 		},
 		{
-			'name': 'Запасная',
-			'path': 'funk',
-			'disabled': true
+			'name': 'Профиль',
+			'path': 'profile',
+			'disabled': false
 		}
 	];
 
 	useEffect(() => {
-		
 		if (fetchedUser) {
 			setId(fetchedUser.id)
 		}
@@ -98,6 +99,7 @@ const Home = ({ id, fetchedUser }) => {
 			<Groups id="groups" userId={userId} go={go} getToken={getToken}/>
 			<Market id="market"/>
 			<AddNFT id="addNFT"/>
+			<Profile userId={userId} id="profile"/>
 			<SelectedGroup userId={userId} token={token} id={current} groupId={groupId} groupData={groupData}/>
 		</View>
 	</Panel>

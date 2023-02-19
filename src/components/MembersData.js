@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import bridge from '@vkontakte/vk-bridge';
 import MembersList from './MembersList';
 
-const MembersData = ({token, memberId}) => {
+const MembersData = ({token, memberId, groupId}) => {
     const [members, setMembers] = useState([]);
     useEffect(() => {
         if (memberId) {
@@ -29,7 +29,7 @@ const MembersData = ({token, memberId}) => {
     
     return(
         <div className='members'>
-            <MembersList members={members}/>
+            <MembersList groupId={groupId} members={members}/>
         </div>
     )
 };
