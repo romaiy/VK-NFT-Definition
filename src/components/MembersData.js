@@ -4,11 +4,10 @@ import MembersList from './MembersList';
 
 const MembersData = ({token, memberId}) => {
     const [members, setMembers] = useState([]);
-
     useEffect(() => {
         if (memberId) {
             const stringFromArr = memberId
-            .join(', ');    
+            .join(', ');
             bridge.send('VKWebAppCallAPIMethod', {
                 method: 'users.get',
                     params: {

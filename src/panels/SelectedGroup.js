@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import bridge from '@vkontakte/vk-bridge';
 
 import { Div, Button, Banner, View, SplitCol, SplitLayout } from '@vkontakte/vkui';
@@ -8,9 +8,10 @@ import Members from '../components/Members';
 
 const SelectedGroup = ({ userId, token, groupId, groupData }) => {
     const [events, setEvents] = useState([]);
+
     const [popout, setPopout] = React.useState(null);
     const onClick = () => setPopout(<CustomPopout addNewEvents={addNewEvents} onClose={() => setPopout(null)} />);
-
+    
     const addNewEvents = (event) => {
         bridge.send('VKWebAppCallAPIMethod', {
             method: 'groups.create',
@@ -105,24 +106,3 @@ const SelectedGroup = ({ userId, token, groupId, groupData }) => {
 
 
 export default SelectedGroup;
-
-/* bridge.send("VKWebAppGetCommunityToken", {
-    app_id: 51557766,
-    group_id: + (groupId),
-    scope: 'manage, app_widget, groups, ads, stats'
-    })
-    .then((data) => { 
-        if (data.access_token) {
-            fetchJsonp(`https://api.vk.com/method/groups.create?redirect_uri=https://oauth.vk.com/blank.html&title=${event.name}&description=${event.description}&type=event&access_token=${data.access_token}&v=5.131 HTTP/1.1`)
-            .then(res => res.json())
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.log(error);
-            })     
-        }
-    })
-    .catch((error) => {
-        console.log(error);
-    }); */

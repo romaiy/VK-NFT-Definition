@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Div, Button, Banner, View, SplitCol, SplitLayout, PopoutWrapper, ModalDismissButton, useAdaptivityConditionalRender, Input, Textarea} from '@vkontakte/vkui';
+import { Button, PopoutWrapper, ModalDismissButton, useAdaptivityConditionalRender, Input, Textarea} from '@vkontakte/vkui';
 
 
 const CustomPopout = ({ onClose, addNewEvents }) => {
