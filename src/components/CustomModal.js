@@ -14,18 +14,18 @@ const CustomModal = ({ onClose, userId, groupId }) => {
     
 
     useEffect(() => {
-        names = {"names": ["66oqzN9ryBFkTeP6q2Xa1R6k1eXL9zbuwXk3kvjkFts8", "4AAQeKZjuCiEtznLX5TTnbunNtBifp7mH86RjyQoC8XY"]}
+        let names = {"names": ["66oqzN9ryBFkTeP6q2Xa1R6k1eXL9zbuwXk3kvjkFts8", "4AAQeKZjuCiEtznLX5TTnbunNtBifp7mH86RjyQoC8XY"]}
 		axios.post("http://localhost:8000/find", names, 
         {headers: {
             'Content-Type': 'application/json'
-          }})
+        }})
         .then((responseFromServer) => {
-            console.log(responseFromServer)
-            setNftKey(responseFromServer);
+            console.log(responseFromServer);
+            setNftKey(responseFromServer.data);
         }).catch((err) => {
             console.log(err);
         });
-	}, [NftKey]);
+	}, []);
 
     const pushNotifications = () => {
         bridge.send('VKWebAppCallAPIMethod', {
@@ -47,7 +47,7 @@ const CustomModal = ({ onClose, userId, groupId }) => {
     
     const sendNFT = () => {
         if ((wallet != null) && (NftName != '')) {
-            payload = new FormData()
+            const payload = new FormData()
             payload.append('address', NftName)
             payload.append('destpub', wallet)
             axios.post('http://localhost:8000/send', payload, {
@@ -101,7 +101,12 @@ const CustomModal = ({ onClose, userId, groupId }) => {
             {(isArray(NftKey)) ? 
             NftKey.map((item) => {
                 return(
-                    <div>{item.name}</div>
+                    <>
+                    <div key={item}>{item}</div>
+                    <br/>
+                    </>
+                    
+
                 )
             }) :
             <div className='modal'>Загрузка NFT...</div>
