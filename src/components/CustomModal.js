@@ -14,7 +14,11 @@ const CustomModal = ({ onClose, userId, groupId }) => {
     
 
     useEffect(() => {
-		axios.get("http://localhost:8000/api/table")
+        names = {"names": ["66oqzN9ryBFkTeP6q2Xa1R6k1eXL9zbuwXk3kvjkFts8", "4AAQeKZjuCiEtznLX5TTnbunNtBifp7mH86RjyQoC8XY"]}
+		axios.post("http://localhost:8000/find", names, 
+        {headers: {
+            'Content-Type': 'application/json'
+          }})
         .then((responseFromServer) => {
             console.log(responseFromServer)
             setNftKey(responseFromServer);
@@ -43,9 +47,12 @@ const CustomModal = ({ onClose, userId, groupId }) => {
     
     const sendNFT = () => {
         if ((wallet != null) && (NftName != '')) {
-            axios.post('http://localhost:8000/api/table', wallet, {
+            payload = new FormData()
+            payload.append('address', NftName)
+            payload.append('destpub', wallet)
+            axios.post('http://localhost:8000/send', payload, {
                     headers: {
-                        'Content-Type': `text/html; charset=utf-8`
+                        'Content-Type': `'multipart/form-data'; application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; boundary=${payload._boundary}`
                     }
                 }).then((responseFromServer) => {
                     console.log(responseFromServer)

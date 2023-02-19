@@ -9,11 +9,13 @@ const AddNFT = () => {
         if (selectedImage != null) {
             const formData = new FormData();
             formData.append(
-                'kostyaKot',
+                'file',
                 selectedImage,
                 selectedImage.name
             );
-            axios.post('http://localhost:8000/api/table', formData, {
+            formData.append('imgname', 'kostyakot');
+            formData.append('desc', 'oh my kot')
+            axios.post('http://localhost:8000/nft', formData, {
                     headers: {
                         'Content-Type': `'multipart/form-data'; application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; boundary=${formData._boundary}`
                     }
